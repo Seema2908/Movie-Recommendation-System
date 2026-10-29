@@ -148,27 +148,21 @@ st.markdown(
         padding: 1.5rem 1.4rem 1rem !important;
         box-shadow: 0 18px 45px rgba(0,0,0,.12);
     }
-    /* Make the actual select control match the primary button height. */
+    /* Match the visible movie selector height to the Find My Movies button. */
     [data-testid="stSelectbox"] div[data-baseweb="select"] > div,
-    div[data-testid="stSelectbox"] div[data-baseweb="select"] > div {
-        background: #171A12 !important;
-        border: 1px solid #50583A !important;
-        border-radius: 12px !important;
+    [data-testid="stSelectbox"] div[data-baseweb="select"] [role="combobox"],
+    [data-testid="stSelectbox"] div[data-baseweb="select"] {
         min-height: 78px !important;
         height: 78px !important;
         max-height: 78px !important;
-        padding-top: 0 !important;
-        padding-bottom: 0 !important;
-        font-size: 1.08rem !important;
         box-sizing: border-box !important;
     }
-    [data-testid="stSelectbox"] div[data-baseweb="select"] [role="combobox"],
-    div[data-testid="stSelectbox"] div[data-baseweb="select"] [role="combobox"] {
-        min-height: 76px !important;
-        height: 76px !important;
-        max-height: 76px !important;
+    [data-testid="stSelectbox"] div[data-baseweb="select"] > div {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        display: flex !important;
         align-items: center !important;
-        box-sizing: border-box !important;
+        border-radius: 12px !important;
     }
     div[data-baseweb="select"] * { color: var(--olive-ivory) !important; }
     div[data-baseweb="select"] > div:hover { border-color: var(--olive-accent) !important; }
@@ -194,7 +188,7 @@ st.markdown(
     /* Explicitly style the label inside Streamlit's primary button. */
     [data-testid="stButton"] button[kind="primary"] p,
     .stButton button[kind="primary"] p {
-        font-size: 1.4rem !important;
+        font-size: 1.15rem !important;
         font-weight: 900 !important;
         line-height: 1.1 !important;
         font-family: Arial, Helvetica, sans-serif !important;
@@ -337,8 +331,6 @@ st.markdown(
         .hero { padding-top: .5rem; }
         .hero-title { letter-spacing: -.8px; font-size: clamp(2rem, 9vw, 3rem); }
         .hero-copy { font-size: .94rem; line-height: 1.55; margin-bottom: .4rem; }
-        [data-testid="stSelectbox"] div[data-baseweb="select"] > div { min-height: 78px !important; height: 78px !important; max-height: 78px !important; }
-        [data-testid="stSelectbox"] div[data-baseweb="select"] [role="combobox"] { min-height: 76px !important; height: 76px !important; max-height: 76px !important; }
         .stButton > button[kind="primary"],
         [data-testid="stButton"] > button[kind="primary"] { min-height: 56px !important; height: 56px !important; max-height: 56px !important; }
         .search-label { margin-top: 1rem; }
