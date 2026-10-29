@@ -45,29 +45,6 @@ Whether you're looking for your next favorite movie or exploring films in a part
 | 📱 Responsive Interface | A modern layout designed for different screen sizes. |
 
 ## ⚙️ How It Works
-
-```text
-Movie Metadata
-      │
-      ▼
-Data Cleaning & Feature Combination
-      │
-      ▼
-Genres + Keywords + Cast + Director + Overview
-      │
-      ▼
-       TF-IDF
-      │
-      ▼
-Cosine Similarity Matrix
-      │
-      ▼
-Find Similar Movies
-      │
-      ▼
-Recommendations in Streamlit
-```
-
 1. **Data preparation:** Relevant movie attributes are combined into a single text representation.
 2. **Feature extraction:** TF-IDF converts movie descriptions into numerical vectors.
 3. **Similarity calculation:** Cosine similarity measures the similarity between movies.
@@ -166,15 +143,6 @@ Open the local URL displayed in your terminal to explore the application.
 This project uses the **TMDB 5000 Movies Dataset**, containing movie metadata used to build the content-based recommendation system.
 
 A separate `movie_posters.csv` file maps movies to poster URLs. Poster availability depends on the image URLs remaining accessible.
-
-## 🎓 What I Learned
-
-- Applying text vectorization techniques to movie metadata.
-- Using cosine similarity for content-based recommendations.
-- Preparing and processing structured datasets with Python.
-- Integrating a machine learning model into a Streamlit web application.
-- Managing model artifacts with Joblib and Git LFS.
-- Deploying an interactive application using Streamlit Community Cloud.
 
 ## 🔮 Future Enhancements
 
