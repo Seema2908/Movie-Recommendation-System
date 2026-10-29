@@ -8,7 +8,7 @@ import streamlit.components.v1 as components
 
 
 # ---------------------------------------------------------
-# CineMatch — Olive Noir
+# MovZone — Olive Noir
 # UI redesign only. The recommendation model/artifacts stay
 # unchanged: movies_clean.pkl + similarity.pkl.
 # ---------------------------------------------------------
@@ -18,7 +18,7 @@ ARTIFACTS_DIR = BASE_DIR / "artifacts"
 DATA_DIR = BASE_DIR / "data"
 
 st.set_page_config(
-    page_title="CineMatch | Olive Noir",
+    page_title="MovZone | Olive Noir",
     page_icon="🎬",
     layout="wide",
     initial_sidebar_state="collapsed",
@@ -154,9 +154,9 @@ st.markdown(
         background: #171A12 !important;
         border: 1px solid #50583A !important;
         border-radius: 12px !important;
-        min-height: 64px !important;
-        height: 64px !important;
-        max-height: 64px !important;
+        min-height: 78px !important;
+        height: 78px !important;
+        max-height: 78px !important;
         padding-top: 0 !important;
         padding-bottom: 0 !important;
         font-size: 1.08rem !important;
@@ -164,9 +164,9 @@ st.markdown(
     }
     [data-testid="stSelectbox"] div[data-baseweb="select"] [role="combobox"],
     div[data-testid="stSelectbox"] div[data-baseweb="select"] [role="combobox"] {
-        min-height: 62px !important;
-        height: 62px !important;
-        max-height: 62px !important;
+        min-height: 76px !important;
+        height: 76px !important;
+        max-height: 76px !important;
         align-items: center !important;
         box-sizing: border-box !important;
     }
@@ -190,6 +190,20 @@ st.markdown(
         letter-spacing: .2px;
         transition: transform .22s ease, box-shadow .22s ease, filter .22s ease;
         box-shadow: 0 7px 20px rgba(166,184,91,.13);
+    }
+    /* Explicitly style the label inside Streamlit's primary button. */
+    [data-testid="stButton"] button[kind="primary"] p,
+    .stButton button[kind="primary"] p {
+        font-size: 1.4rem !important;
+        font-weight: 900 !important;
+        line-height: 1.1 !important;
+        font-family: Arial, Helvetica, sans-serif !important;
+    }
+    [data-testid="stButton"] button[kind="primary"] {
+        min-height: 56px !important;
+        height: 56px !important;
+        max-height: 56px !important;
+        padding: 0 1rem !important;
     }
     .stButton > button[kind="primary"]:hover {
         filter: brightness(1.08);
@@ -323,12 +337,10 @@ st.markdown(
         .hero { padding-top: .5rem; }
         .hero-title { letter-spacing: -.8px; font-size: clamp(2rem, 9vw, 3rem); }
         .hero-copy { font-size: .94rem; line-height: 1.55; margin-bottom: .4rem; }
-        [data-testid="stSelectbox"] div[data-baseweb="select"] > div { min-height: 64px !important; height: 64px !important; }
-        [data-testid="stSelectbox"] div[data-baseweb="select"] [role="combobox"] { min-height: 62px !important; height: 62px !important; }
+        [data-testid="stSelectbox"] div[data-baseweb="select"] > div { min-height: 78px !important; height: 78px !important; max-height: 78px !important; }
+        [data-testid="stSelectbox"] div[data-baseweb="select"] [role="combobox"] { min-height: 76px !important; height: 76px !important; max-height: 76px !important; }
         .stButton > button[kind="primary"],
         [data-testid="stButton"] > button[kind="primary"] { min-height: 56px !important; height: 56px !important; max-height: 56px !important; }
-        .stButton > button[kind="primary"],
-        [data-testid="stButton"] > button[kind="primary"] { font-size: 1.12rem !important; }
         .search-label { margin-top: 1rem; }
         .movie-title { font-size: .85rem; }
         .card-body { padding: 10px; }
@@ -483,7 +495,7 @@ st.markdown(
     <div class="brand-row">
         <div class="brand-icon">🎬</div>
         <div>
-            <div class="brand-name">CINEMATCH</div>
+            <div class="brand-name">MOVZONE</div>
             <div class="brand-tagline">YOUR PERSONAL FILM DISCOVERY ENGINE</div>
         </div>
     </div>
@@ -545,12 +557,12 @@ remaining_titles = sorted(
 )
 ordered_movie_titles = featured_titles + remaining_titles
 
-if "cine_recommendations" not in st.session_state:
-    st.session_state.cine_recommendations = []
-if "cine_selected_movie" not in st.session_state:
-    st.session_state.cine_selected_movie = None
-if "cine_watchlist" not in st.session_state:
-    st.session_state.cine_watchlist = []
+if "movzone_recommendations" not in st.session_state:
+    st.session_state.movzone_recommendations = []
+if "movzone_selected_movie" not in st.session_state:
+    st.session_state.movzone_selected_movie = None
+if "movzone_watchlist" not in st.session_state:
+    st.session_state.movzone_watchlist = []
 
 # Use readable names in the dropdown while retaining TMDB's language codes internally.
 language_codes = sorted({
@@ -578,7 +590,7 @@ with st.container(border=True):
             "Original language",
             options=language_options,
             index=0,
-            key="cine_language_filter",
+            key="movzone_language_filter",
             help="Filter the movie list by the film's original language.",
         )
 
@@ -599,7 +611,7 @@ with st.container(border=True):
             index=None,
             placeholder="Start typing a movie title...",
             label_visibility="visible",
-            key=f"cine_movie_selector_{selected_language_code or 'all'}",
+            key=f"movzone_movie_selector_{selected_language_code or 'all'}",
         )
 
     with button_col:
@@ -612,7 +624,7 @@ with st.container(border=True):
     if not original_language_lookup:
         st.caption(
             "Language filtering needs data/tmdb_5000_movies.csv with "
-            "title and original_language columns. The rest of CineMatch still works."
+            "title and original_language columns. The rest of MovZone still works."
         )
     elif selected_language_code and not filtered_movie_titles:
         st.caption("No movies were found for this language in the current dataset.")
@@ -622,13 +634,13 @@ if recommend_clicked:
         st.warning("Choose a movie first, then discover your next favourites.")
     else:
         with st.spinner("Finding movies with a similar vibe..."):
-            st.session_state.cine_recommendations = recommend_movies(selected_movie, 5)
-            st.session_state.cine_selected_movie = selected_movie
+            st.session_state.movzone_recommendations = recommend_movies(selected_movie, 5)
+            st.session_state.movzone_selected_movie = selected_movie
 
 
 # -------------------- Recommendation cards ----------------
-recommendations = st.session_state.cine_recommendations
-current_movie = st.session_state.cine_selected_movie
+recommendations = st.session_state.movzone_recommendations
+current_movie = st.session_state.movzone_selected_movie
 
 if current_movie and recommendations:
     st.markdown(
@@ -665,7 +677,7 @@ if current_movie and recommendations:
                     '</div>'
                 )
 
-            is_saved = title in st.session_state.cine_watchlist
+            is_saved = title in st.session_state.movzone_watchlist
             saved_pill = '<span class="watchlist-pill">✓ IN WATCHLIST</span>' if is_saved else ""
 
             # Keep the HTML card on one line so Markdown does not
@@ -684,11 +696,11 @@ if current_movie and recommendations:
             button_label = "✓ Saved" if is_saved else "＋ Watchlist"
             if st.button(
                 button_label,
-                key=f"watchlist_{position}_{title}",
+                key=f"movzone_watchlist_button_{position}_{title}",
                 use_container_width=True,
                 disabled=is_saved,
             ):
-                st.session_state.cine_watchlist.append(title)
+                st.session_state.movzone_watchlist.append(title)
                 st.rerun()
 
 elif current_movie and not recommendations:
@@ -699,7 +711,7 @@ if recommend_clicked and current_movie and recommendations:
     components.html(
         """
         <script>
-        function scrollToCineMatchRecommendations() {
+        function scrollToMovZoneRecommendations() {
             const doc = window.parent.document;
             const nodes = Array.from(doc.querySelectorAll('[data-testid="stMarkdownContainer"]'));
             const target = nodes.find(node =>
@@ -707,15 +719,15 @@ if recommend_clicked and current_movie and recommendations:
             );
             if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
-        setTimeout(scrollToCineMatchRecommendations, 350);
-        setTimeout(scrollToCineMatchRecommendations, 900);
+        setTimeout(scrollToMovZoneRecommendations, 350);
+        setTimeout(scrollToMovZoneRecommendations, 900);
         </script>
         """,
         height=0,
     )
 
 # ----------------------- Watchlist ------------------------
-if st.session_state.cine_watchlist:
+if st.session_state.movzone_watchlist:
     st.markdown(
         """
         <div class="section-heading">
@@ -727,23 +739,23 @@ if st.session_state.cine_watchlist:
         unsafe_allow_html=True,
     )
 
-    watchlist_columns = st.columns([4, 1])
-    with watchlist_columns[0]:
-        for saved_title in st.session_state.cine_watchlist:
+    movzone_watchlist_button_columns = st.columns([4, 1])
+    with movzone_watchlist_button_columns[0]:
+        for saved_title in st.session_state.movzone_watchlist:
             st.markdown(
                 f'<div style="padding:10px 0;border-bottom:1px solid #3B412C;color:#F4F0E5;">'
                 f'🎬 &nbsp; {html.escape(str(saved_title))}</div>',
                 unsafe_allow_html=True,
             )
-    with watchlist_columns[1]:
+    with movzone_watchlist_button_columns[1]:
         if st.button("Clear watchlist", use_container_width=True):
-            st.session_state.cine_watchlist = []
+            st.session_state.movzone_watchlist = []
             st.rerun()
 
 st.markdown(
     """
     <div class="footer">
-        <span style="color:#A6B85B;font-weight:800;letter-spacing:1.5px;">CINEMATCH</span>
+        <span style="color:#A6B85B;font-weight:800;letter-spacing:1.5px;">MOVZONE</span>
         &nbsp; · &nbsp; Made for curious movie lovers
      </div>
     """,
