@@ -178,9 +178,9 @@ st.markdown(
         color: #171A12;
         border: 1px solid #A6B85B;
         border-radius: 12px;
-        min-height: 64px !important;
-        height: 64px !important;
-        max-height: 64px !important;
+        min-height: 56px !important;
+        height: 56px !important;
+        max-height: 56px !important;
         padding-top: 0 !important;
         padding-bottom: 0 !important;
         line-height: 1.2 !important;
@@ -228,10 +228,12 @@ st.markdown(
         margin: 0 0 9px;
         overflow-wrap: anywhere;
     }
+    .selected-movie-title { color: var(--olive-accent); }
     .section-copy { color: var(--olive-muted); line-height: 1.65; }
     .movie-card {
         overflow: hidden;
         height: 100%;
+        margin-bottom: 10px;
         background: var(--olive-panel);
         border: 1px solid var(--olive-border);
         border-radius: 15px;
@@ -324,7 +326,7 @@ st.markdown(
         [data-testid="stSelectbox"] div[data-baseweb="select"] > div { min-height: 64px !important; height: 64px !important; }
         [data-testid="stSelectbox"] div[data-baseweb="select"] [role="combobox"] { min-height: 62px !important; height: 62px !important; }
         .stButton > button[kind="primary"],
-        [data-testid="stButton"] > button[kind="primary"] { min-height: 64px !important; height: 64px !important; max-height: 64px !important; }
+        [data-testid="stButton"] > button[kind="primary"] { min-height: 56px !important; height: 56px !important; max-height: 56px !important; }
         .stButton > button[kind="primary"],
         [data-testid="stButton"] > button[kind="primary"] { font-size: 1.12rem !important; }
         .search-label { margin-top: 1rem; }
@@ -566,11 +568,6 @@ language_value_to_code = {
 }
 
 with st.container(border=True):
-    st.markdown(
-        '<div class="search-label">01 / PICK YOUR STARTING POINT</div>',
-        unsafe_allow_html=True,
-    )
-
     language_col, search_col, button_col = st.columns(
         [1.45, 3.7, 1.5],
         vertical_alignment="bottom",
@@ -637,11 +634,10 @@ if current_movie and recommendations:
     st.markdown(
         f"""
         <div class="section-heading">
-            <div class="eyebrow">02 / YOUR PERSONAL LINEUP</div>
             <div class="section-intro">Because you loved</div>
-            <div class="section-title">{html.escape(str(current_movie))}.</div>
+            <div class="section-title selected-movie-title">{html.escape(str(current_movie))}.</div>
             <div class="section-copy">
-                Five picks for your next movie night. Hover over a poster for a little cinematic magic.
+                Five picks for your next movie night.
             </div>
         </div>
         """,
@@ -707,7 +703,7 @@ if recommend_clicked and current_movie and recommendations:
             const doc = window.parent.document;
             const nodes = Array.from(doc.querySelectorAll('[data-testid="stMarkdownContainer"]'));
             const target = nodes.find(node =>
-                node.innerText && node.innerText.includes('02 / YOUR PERSONAL LINEUP')
+                node.innerText && node.innerText.includes('Because you loved')
             );
             if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
